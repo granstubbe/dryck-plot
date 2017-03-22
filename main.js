@@ -34,7 +34,7 @@ var margin = {top: 50, right: 20, bottom: 30, left: 100},
 
 // set the canvas
 var svg = d3.select("body").select(".graph").append("svg")
-    .attr("width", width + 200 + margin.left + margin.right)
+    .attr("width", width + 150 + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom + 20)
     .append("g")
     .attr("transform",
