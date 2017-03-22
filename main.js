@@ -307,7 +307,7 @@ svg.selectAll(".dot").data(nodes).on("mouseover", function(d) {
           tooltip.transition()
                .duration(400)
                .style("opacity", .9);
-          tooltip.html(d.name + "<br\>"+ d.type + "<br\>"+ d3.format(",")(d.price) + "kr" + "<br\>"+ d3.format(",")(Math.floor(d.sales)) + " antal sålda" + "<br\>"+ d.alkohol)
+          tooltip.html(d.name + "<br\>"+ d.type + "<br\>"+ d3.format(",")(d.price) + "kr" + "<br\>"+ d3.format(",")(Math.floor(d.sales)) + " antal sålda")
                .style("left", (xMap(d) + 120) + "px")
                .style("top", (yMap(d)) + "px");
           
