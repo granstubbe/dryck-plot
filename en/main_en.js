@@ -10,7 +10,7 @@ https://github.com/granstubbe
 var nodes = [],
     APK = 0, //APK = Alcohol Per Krona, variable for switching "currency"
     first = 1;
-d3.csv("data.csv", function(d) {
+d3.csv("data_en.csv", function(d) {
   return {
     name : d.Kvittonamn,
     price: +d.Pris,
@@ -27,9 +27,9 @@ d3.csv("data.csv", function(d) {
 var types = d3.map(data, function(d){return d.type;}).keys()
 
 // set the dimensions and margins of the graph
-var margin = {top: 50, right: 20, bottom: 30, left: 100},
+var margin = {top: 100, right: 20, bottom: 30, left: 100},
     width = 960 - margin.left - margin.right,
-    height = 550 - margin.top - margin.bottom;
+    height = 600 - margin.top - margin.bottom;
 
 
 // set the canvas
@@ -86,9 +86,9 @@ function xAxis() {
   svg.append("text")
      .attr("id","xlabel")             
      .attr("transform","translate(" + (width/2) + " ," + 
-                           (height + margin.top - 5) + ")")
+                           (height + 45) + ")")
      .style("text-anchor", "middle")
-     .text("Pris [kr]");
+     .text("Price [kr]");
       
       
 //Y-axis
@@ -129,7 +129,7 @@ svg.append("text")
     .attr("x",-height/2)
     .attr("dy", ".71em")
     .style("text-anchor", "middle")
-    .text("Antal sålda");  
+    .text("Number of sold items");  
       
       
 // Setup fill color
@@ -142,7 +142,7 @@ var tooltip = d3.select("body").append("div")
                 .style("opacity", 0);
 
 //Add switch-buttons
-var button_text = [{name:"APK", value:1},{name:"Pris",value:0}];
+var button_text = [{name:"APK", value:1},{name:"Price",value:0}];
 var button = svg.selectAll(".button")
                 .data(button_text)
                 .enter().append("g")
@@ -178,7 +178,7 @@ var button = svg.selectAll(".button")
                 .attr("class","legendTitle")
                 .style("left", (width + 114 + "px"))
                 .style("top", (margin.top + "px"))
-                .html("Växla mellan APK och Pris");
+                .html("Switch between APK and Price");
 
 
   
@@ -214,14 +214,13 @@ var button = svg.selectAll(".button")
                         .attr("class","legendTitle")
                         .style("left", (width + 114 + "px"))
                         .style("top", (55 + margin.top + "px"))
-                        .html("Klicka nedan för att visa/dölja");
-                        
-                        
+                        .html("Click below to hide/show");
+
     d3.select("body").select(".graph").append("div")
                         .attr("class","legendTitle")
                         .style("left", (width + 105 + "px"))
                         .style("top", (425 + margin.top + "px"))
-                        .html("<a href=\"https://granstubbe.github.com/dryck-plot/en\">English version</a>");
+                        .html("1$ ≈ 1€ ≈ 10kr ");
 
 //Update nodes in graph  
 function updateNodes(type){
@@ -282,16 +281,16 @@ function updateAxis(){
                         d3.min(nodes,function (d) { return d.apk; }),
                         d3.max(nodes,function (d) { return d.apk; })
                         ])
-        d3.select("#xlabel").text("Alkohol per krona [ml/kr]");
+        d3.select("#xlabel").text("Alcohol per Krona [ml/kr]");
     }else if(!APK && nodes.length != 0){
         x = d3.scaleLog().range([10, width-10]).domain([
                         d3.min(nodes,function (d) { return d.price; }),
                         d3.max(nodes,function (d) { return d.price; })
                         ]);
-        d3.select("#xlabel").text("Pris [kr]");
+        d3.select("#xlabel").text("Price [kr]");
     }else{
     x = d3.scaleLog().range([0, width]).domain([5,100000]); 
-        d3.select("#xlabel").text("Pris [kr]");
+        d3.select("#xlabel").text("Price [kr]");
         }
     
     // update the X-axis gridlines
@@ -328,9 +327,9 @@ svg.selectAll(".dot").data(nodes).on("mouseover", function(d) {
           tooltip.transition()
                .duration(400)
                .style("opacity", .9);
-          tooltip.html(d.name + "<br\>"+ d.type + "<br\>"+ d3.format(",")(d.price) + "kr" + "<br\>"+ d3.format(",")(Math.floor(d.sales)) + " antal sålda")
+          tooltip.html(d.name + "<br\>"+ d.type + "<br\>"+ d3.format(",")(d.price) + "kr" + "<br\>"+ d3.format(",")(Math.floor(d.sales)) + " number sold")
                .style("left", (xMap(d) + 120) + "px")
-               .style("top", (yMap(d)) + "px");
+               .style("top", (yMap(d)+80) + "px");
           
       })
       .on("mouseout", function(d) {

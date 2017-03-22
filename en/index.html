@@ -1,3 +1,4 @@
+<!--English version--!>
 <!DOCTYPE html>
 <meta charset="utf-8">
     <head>
@@ -81,7 +82,7 @@
     width: 200px;
     height: 100px;
     left:430px;
-    top:300px;
+    top:250px;
     font-size: 14px;
     line-height: 120%;
     z-index: 9999;
@@ -105,26 +106,30 @@ position: relative;
 </style>    
 <body>
 <script src="https://d3js.org/d3.v4.min.js"></script>
-<div id="intro">Välj något att visa till höger!</div>
-<div class="header">Visualisering av Sveriges alkoholpreferenser 2016</div>
+<div id="intro">Pick something to the right!</div>
+<div class="header">Visualization of the preferred alcoholic beverages in Sweden 2016</div>
 <div class="graph"></div>
-<div class="text">En grafisk sammanställning baserad på Systembolagets öppna försäljningsstatistik 2016 som finns <a href="https://www.systembolaget.se/om-systembolaget/om-foretaget/forsaljningsstatistik/">här</a>. 
-Grafen (log-log plot) visar hur vi svenskar konsumerade alkohol 2016 i förhållande till sitt pris. Slutsatserna får ni dra själva men billigt säljer bra, och alkohol är inget undantag.<br/> 
-Välj mellan att visa priset i totalt antal kronor eller i <a href="https://sv.wikipedia.org/wiki/Alkohol_per_krona">APK (Alkohol Per Krona)</a>
+<div class="text">
+A graphical summary based on the official statistics of Systembolaget, which has monopoly on alcoholic beverages in Sweden. The raw data can be found
+<a href="https://www.systembolaget.se/om-systembolaget/om-foretaget/forsaljningsstatistik/">here</a>. 
+The graph (log-log plot) shows how the Swedes consumed alcohol during 2016 in comparison to its price.
+Choose between showing the price in kr (kronor) or in APK (Alcohol Per Krona [ml/kr]).
+
 <br/>
 <br/>
-<b>Instruktioner:</b><br/>
-Klicka färgrutan eller texten på den kategorin du vill visa/dölja<br/>
-Klicka på "APK" eller "Pris" för att växla mellan Pris och APK på horisontella axeln.<br/>
-Håll musen över valfri punkt för att se vilken dryck den tillhör
+<b>Instructions:</b><br/>
+Click on the colored square or the text of the category you want to show/hide<br/>
+
+Click on "APK" or "Price" to switch between price and APK on the horisontal axis<br/>
+Hover over any point to show which beverage it represents
 <br/>
 <br/>
-Koden baseras på D3.js v4 och finns tillgänglig på <a href="https://github.com/granstubbe/dryck-plot">GitHub</a>
+The code is based on D3.js v4 and is available on <a href="https://github.com/granstubbe/dryck-plot">GitHub</a>
 <br/>
-Fungerar bäst på större skärmar...
+Works best on large screens...
 
 </div>
-<script src="main.js"></script> 
+<script src="main_en.js"></script> 
 </body>    
            
    
