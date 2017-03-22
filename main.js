@@ -1,9 +1,15 @@
-//https://bl.ocks.org/d3noob/c506ac45617cf9ed39337f99f8511218
-//http://bl.ocks.org/weiglemc/6185069
+/*
+Based on
+https://bl.ocks.org/d3noob/c506ac45617cf9ed39337f99f8511218
+http://bl.ocks.org/weiglemc/6185069
 
-//var data;
-var nodes = [];
-var APK = 0; //APK = Alcohol Per Krona, variable for switching "currency"
+Made by granstubbe, 2017
+https://github.com/granstubbe
+*/
+
+var nodes = [],
+    APK = 0, //APK = Alcohol Per Krona, variable for switching "currency"
+    first = 1;
 d3.csv("data.csv", function(d) {
   return {
     name : d.Kvittonamn,
@@ -214,6 +220,10 @@ var button = svg.selectAll(".button")
 
 //Update nodes in graph  
 function updateNodes(type){
+  if(first){ document.getElementById("intro").remove();
+             first = 0;
+             }
+    
     
   //Check if nodes are to be updated or added    
   var extracted = nodes.filter(function(d) {return d.type!=type;});  
@@ -259,7 +269,7 @@ function updateNodes(type){
 //Updates X-axis
 function updateAxis(){
     //Check which setting and adapt axis parameters
-    if(APK){
+    if(APK && nodes.length != 0){
         nodes = nodes.filter(function(d) {return d.alkohol!=0;});
         svg.selectAll(".dot").data(nodes).exit().remove();
         x = d3.scaleLog().range([10, (width-10)])
@@ -268,10 +278,16 @@ function updateAxis(){
                         d3.max(nodes,function (d) { return d.apk; })
                         ])
         d3.select("#xlabel").text("Alkohol per krona [ml/kr]");
-    }else{
-        x = d3.scaleLog().range([0, width]).domain([5,100000]);
+    }else if(!APK && nodes.length != 0){
+        x = d3.scaleLog().range([10, width-10]).domain([
+                        d3.min(nodes,function (d) { return d.price; }),
+                        d3.max(nodes,function (d) { return d.price; })
+                        ]);
         d3.select("#xlabel").text("Pris [kr]");
-    }
+    }else{
+    x = d3.scaleLog().range([0, width]).domain([5,100000]); 
+        d3.select("#xlabel").text("Pris [kr]");
+        }
     
     // update the X-axis gridlines
   svg.select("#xgrid")

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<meta charset="utf-8">
     <head>
         <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -11,7 +11,7 @@
   ga('send', 'pageview');
 
 </script>
-        <meta charset="utf-8">
+        
         
     </head>
 <style> /* set the CSS */
@@ -70,15 +70,37 @@
  line-height: 120%;
 }
 
+#intro{
+    position: absolute;
+    width: 200px;
+    height: 100px;
+    left:480px;
+    top:250px;
+    font-size: 14px;
+    line-height: 120%;
+    z-index: 9999;
+    background: white;
+    border: 1px;		
+    border-color: grey;
+    border-style: solid;
+    border-radius: 3px;	
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 
 </style>    
 <body>
 <script src="https://d3js.org/d3.v4.min.js"></script>
+<div id="intro">Välj något att visa till höger!</div>
 <div class="header">Interaktiv graf över Systembolagets statistik 2016</div>
 <div class="graph"></div>
 <div class="text">En grafisk sammanställning över Systembolagets öppna försäljningsstatistik 2016 som finns <a href="https://www.systembolaget.se/om-systembolaget/om-foretaget/forsaljningsstatistik/">här</a>. 
-Grafen (log-log plot) visar hur vi svenskar konsumerade alkohol 2016 i förhållande till sitt pris. Slutsatserna får ni dra själva men billigt säljer bra, och alkohol är inget undantag. 
-<a href="https://sv.wikipedia.org/wiki/Alkohol_per_krona">APK (Alkohol Per Krona)</a><br/>
+Grafen (log-log plot) visar hur vi svenskar konsumerade alkohol 2016 i förhållande till sitt pris. Slutsatserna får ni dra själva men billigt säljer bra, och alkohol är inget undantag.<br/> 
+Välj mellan att visa priset i totalt antal kronor eller i <a href="https://sv.wikipedia.org/wiki/Alkohol_per_krona">APK (Alkohol Per Krona)</a>
+<br/>
+<br/>
 <b>Instruktioner:</b><br/>
 Klicka färgrutan eller texten på den kategorin du vill visa/dölja<br/>
 Klicka på "APK" eller "Pris" för att växla mellan Pris och APK på horisontella axeln.<br/>
