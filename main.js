@@ -23,15 +23,15 @@ d3.csv("data.csv", function(d) {
 var types = d3.map(data, function(d){return d.type;}).keys()
 
 // set the dimensions and margins of the graph
-var margin = {top: 20, right: 20, bottom: 30, left: 100},
+var margin = {top: 50, right: 20, bottom: 30, left: 100},
     width = 960 - margin.left - margin.right,
     height = 550 - margin.top - margin.bottom;
 
 
 // set the canvas
-var svg = d3.select("body").append("svg")
+var svg = d3.select("body").select(".graph").append("svg")
     .attr("width", width + 200 + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom + 10)
+    .attr("height", height + margin.top + margin.bottom + 20)
     .append("g")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
@@ -82,7 +82,7 @@ function xAxis() {
   svg.append("text")
      .attr("id","xlabel")             
      .attr("transform","translate(" + (width/2) + " ," + 
-                           (height + margin.top + 15) + ")")
+                           (height + margin.top - 5) + ")")
      .style("text-anchor", "middle")
      .text("Pris [kr]");
       
@@ -121,7 +121,7 @@ function yAxis() {
 svg.append("text")
     .attr("class", "label")
     .attr("transform", "rotate(-90)")
-    .attr("y", -80)
+    .attr("y", -60)
     .attr("x",-height/2)
     .attr("dy", ".71em")
     .style("text-anchor", "middle")
@@ -170,10 +170,10 @@ var button = svg.selectAll(".button")
           .style("cursor","pointer")       
           .text(function(d) { return d.name;});
       
-    var buttonText = d3.select("body").append("div")
+    var buttonText = d3.select("body").select(".graph").append("div")
                 .attr("class","legendTitle")
                 .style("left", (width + 114 + "px"))
-                .style("top", (30 + "px"))
+                .style("top", (margin.top +10 + "px"))
                 .html("Växla mellan APK och Pris");
 
 
@@ -206,10 +206,10 @@ var button = svg.selectAll(".button")
           .text(function(d) { return d;});
      
     
-    var legendText = d3.select("body").append("div")
+    var legendText = d3.select("body").select(".graph").append("div")
                         .attr("class","legendTitle")
                         .style("left", (width + 114 + "px"))
-                        .style("top", (85 + "px"))
+                        .style("top", (65 + margin.top + "px"))
                         .html("Klicka nedan för att visa/dölja");
 
 //Update nodes in graph  
