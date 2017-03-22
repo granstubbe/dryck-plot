@@ -165,13 +165,14 @@ var button = svg.selectAll(".button")
   //Draw button text
   button.append("text")
           .attr("id","button")
-          .attr("x", width+14)
+          .attr("x", width+26)
           .attr("y", 12)
           .attr("fill","white")
           .attr("font-size","14")
           .attr("font-family","Tahoma")
           .attr("dy", ".35em")    
-          .style("cursor","pointer")       
+          .style("cursor","pointer")
+          .style("text-anchor", "middle")       
           .text(function(d) { return d.name;});
       
     var buttonText = d3.select("body").select(".graph").append("div")
@@ -213,7 +214,7 @@ var button = svg.selectAll(".button")
     d3.select("body").select(".graph").append("div")
                         .attr("class","legendTitle")
                         .style("left", (width + 114 + "px"))
-                        .style("top", (55 + margin.top + "px"))
+                        .style("top", (57 + margin.top + "px"))
                         .html("Click below to hide/show");
 
     d3.select("body").select(".graph").append("div")
