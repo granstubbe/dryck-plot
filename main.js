@@ -22,9 +22,7 @@ d3.csv("data.csv", function(d) {
     
   };
 }, function(data) {
-    //data = d;
-    //init();
-    //  
+    
 //All types of data
 var types = d3.map(data, function(d){return d.type;}).keys()
 
