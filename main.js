@@ -177,7 +177,7 @@ var button = svg.selectAll(".button")
     var buttonText = d3.select("body").select(".graph").append("div")
                 .attr("class","legendTitle")
                 .style("left", (width + 114 + "px"))
-                .style("top", (margin.top +10 + "px"))
+                .style("top", (margin.top + "px"))
                 .html("Växla mellan APK och Pris");
 
 
@@ -213,7 +213,7 @@ var button = svg.selectAll(".button")
     var legendText = d3.select("body").select(".graph").append("div")
                         .attr("class","legendTitle")
                         .style("left", (width + 114 + "px"))
-                        .style("top", (65 + margin.top + "px"))
+                        .style("top", (55 + margin.top + "px"))
                         .html("Klicka nedan för att visa/dölja");
 
 //Update nodes in graph  
