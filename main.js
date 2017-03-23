@@ -227,7 +227,7 @@ var button2 = svg.selectAll("#button2")
     var buttonText2 = d3.select("body").select(".graph").append("div")
                 .attr("class","legendTitle")
                 .style("left", (width + 114 + "px"))
-                .style("top", (margin.top +47 + "px"))
+                .style("top", (margin.top +43 + "px"))
                 .html("Växla mellan antal sålda liter och antal sålda totalt");
 
 
@@ -270,8 +270,8 @@ var button2 = svg.selectAll("#button2")
     d3.select("body").select(".graph").append("div")
                         .attr("class","legendTitle")
                         .style("left", (width + 105 + "px"))
-                        .style("top", (460 + margin.top + "px"))
-                        .html("<a href=\"https://granstubbe.github.com/dryck-plot/en\">English version</a>");
+                        .style("top", (455 + margin.top + "px"))
+                        .html("<a href=\"https://granstubbe.github.io/dryck-plot/en\">English version</a>");
 
 //Update nodes in graph  
 function updateNodes(type){
