@@ -9,7 +9,8 @@ https://github.com/granstubbe
 
 var nodes = [],
     APK = 0, //APK = Alcohol Per Krona, variable for switching "currency"
-    first = 1;
+    first = 1,
+    liter = 0;
 d3.csv("data.csv", function(d) {
   return {
     name : d.Kvittonamn,
@@ -18,7 +19,8 @@ d3.csv("data.csv", function(d) {
     sales : +d.AntalSålda,
     volume : +d.Volym,
     alkohol : +d.Alkoholhalt,
-    apk : +d.APK
+    apk : +d.APK,
+    salesliter : +d.AntalLiterSålda
     
   };
 }, function(data) {
@@ -96,7 +98,14 @@ var y = d3.scaleLog()
           .range([height, 0])
           .domain([1, 20000000]),  
     
-    yMap = function(d) { return y(d.sales);}    
+    yMap = function(d) { 
+        if(!liter){  
+            return y(d.sales);
+        }else{
+            return y((d.sales*d.volume)/1000);  
+            }
+        };
+          
 
 // Gridlines in y axis function
 function yAxis() {		
@@ -123,13 +132,13 @@ function yAxis() {
       
 //Label for the y axis
 svg.append("text")
-    .attr("class", "label")
+    .attr("id", "ylabel")
     .attr("transform", "rotate(-90)")
     .attr("y", -60)
     .attr("x",-height/2)
     .attr("dy", ".71em")
     .style("text-anchor", "middle")
-    .text("Antal sålda");  
+    .text("Antal sålda [st]");  
       
       
 // Setup fill color
@@ -143,13 +152,27 @@ var tooltip = d3.select("body").append("div")
 
 //Add switch-buttons
 var button_text = [{name:"APK", value:1},{name:"Pris",value:0}];
-var button = svg.selectAll(".button")
+var button = svg.selectAll("#button1")
                 .data(button_text)
                 .enter().append("g")
                 .attr("class", "button")
-                .attr("transform", function(d, i) { return "translate(" + (30 + i * 55) +",20)"; })
+                .attr("transform", function(d, i) { return "translate(" + (30 + i * 55) +",15)"; })
                 .on("click", function (e) {
                     APK = e.value;
+                    console.log(APK);
+                    updateAxis();
+                    updateTooltip;
+                });
+                
+//Add switch-buttons
+var button_text2 = [{name:"Liter", value:1},{name:"Totalt",value:0}];
+var button2 = svg.selectAll("#button2")
+                .data(button_text2)
+                .enter().append("g")
+                .attr("class", "button")
+                .attr("transform", function(d, i) { return "translate(" + (30 + i * 55) +",75)"; })
+                .on("click", function (e) {
+                    liter = e.value;
                     console.log(APK);
                     updateAxis();
                     updateTooltip;
@@ -159,19 +182,20 @@ var button = svg.selectAll(".button")
   button.append("rect")
           .attr("x", width+2)
           .attr("width", 50)
-          .attr("height", 25)
+          .attr("height", 20)
           .style("fill", "#999999");
 
   //Draw button text
   button.append("text")
           .attr("id","button")
-          .attr("x", width+14)
-          .attr("y", 12)
+          .attr("x", width+26)
+          .attr("y", 10)
           .attr("fill","white")
-          .attr("font-size","14")
+          .attr("font-size","13")
           .attr("font-family","Tahoma")
           .attr("dy", ".35em")    
-          .style("cursor","pointer")       
+          .style("cursor","pointer")
+          .style("text-anchor", "middle")        
           .text(function(d) { return d.name;});
       
     var buttonText = d3.select("body").select(".graph").append("div")
@@ -179,6 +203,32 @@ var button = svg.selectAll(".button")
                 .style("left", (width + 114 + "px"))
                 .style("top", (margin.top + "px"))
                 .html("Växla mellan APK och Pris");
+                
+     //Draw colored rectangles around buttons
+  button2.append("rect")
+          .attr("x", width+2)
+          .attr("width", 50)
+          .attr("height", 20)
+          .style("fill", "#999999");
+
+  //Draw button text
+  button2.append("text")
+          .attr("id","button2")
+          .attr("x", width+26)
+          .attr("y", 10)
+          .attr("fill","white")
+          .attr("font-size","13")
+          .attr("font-family","Tahoma")
+          .attr("dy", ".35em")    
+          .style("cursor","pointer")
+          .style("text-anchor", "middle")        
+          .text(function(d) { return d.name;});
+      
+    var buttonText2 = d3.select("body").select(".graph").append("div")
+                .attr("class","legendTitle")
+                .style("left", (width + 114 + "px"))
+                .style("top", (margin.top +47 + "px"))
+                .html("Växla mellan antal sålda liter och antal sålda totalt");
 
 
   
@@ -187,7 +237,7 @@ var button = svg.selectAll(".button")
                     .data(types)
                     .enter().append("g")
                     .attr("class", "legend")
-                    .attr("transform", function(d, i) { return "translate(0," + (80+i * 23) +")"; })
+                    .attr("transform", function(d, i) { return "translate(0," + (120+i * 23) +")"; })
                     .on("click", function (e) {
                         updateNodes(e);
                         //d3.select(this).style("opacity", 0.8);
@@ -213,14 +263,14 @@ var button = svg.selectAll(".button")
     d3.select("body").select(".graph").append("div")
                         .attr("class","legendTitle")
                         .style("left", (width + 114 + "px"))
-                        .style("top", (55 + margin.top + "px"))
+                        .style("top", (103 + margin.top + "px"))
                         .html("Klicka nedan för att visa/dölja");
                         
                         
     d3.select("body").select(".graph").append("div")
                         .attr("class","legendTitle")
                         .style("left", (width + 105 + "px"))
-                        .style("top", (425 + margin.top + "px"))
+                        .style("top", (460 + margin.top + "px"))
                         .html("<a href=\"https://granstubbe.github.com/dryck-plot/en\">English version</a>");
 
 //Update nodes in graph  
@@ -290,10 +340,24 @@ function updateAxis(){
                         ]);
         d3.select("#xlabel").text("Pris [kr]");
     }else{
+    
+    
     x = d3.scaleLog().range([0, width]).domain([5,100000]); 
         d3.select("#xlabel").text("Pris [kr]");
         }
+        
+    if(liter && nodes.length != 0){
+        y = d3.scaleLog().range([height, 0])
+            .domain([
+                    d3.min(nodes,function (d) { return (0.8*d.salesliter); }),
+                    d3.max(nodes,function (d) { return (1.2*d.salesliter); })
+                    ]);
+        d3.select("#ylabel").text("Antal sålda liter [l]"); 
     
+    }else{
+        y = d3.scaleLog().range([height, 0]).domain([1, 20000000]);
+        d3.select("#ylabel").text("Antal sålda [st]");     
+    }
     // update the X-axis gridlines
   svg.select("#xgrid")
       .transition()
@@ -308,12 +372,28 @@ function updateAxis(){
       .call(d3.axisBottom(x)
             .ticks(10,",")
       );
+      
+  // update the Y-axis gridlines    
+    svg.select("#ygrid")
+      .transition()
+      .duration(400)			
+      .call(yAxis());
+
+
+// update the Y Axis
+  svg.select(".yaxis")
+      .transition()
+      .duration(400)
+      .call(d3.axisLeft(y)
+            .ticks(10,",")
+      );
 
 // Update dot positions    
     d3.selectAll('circle') 
           .transition().duration(1000)
           .attr('cx',xMap)
           .attr('cy',yMap)
+          .style("fill", function(d) { return color(cValue(d));})
           .style("opacity", function(d){
                 if(xMap(d)==0){ 
                     return 0;
@@ -328,7 +408,7 @@ svg.selectAll(".dot").data(nodes).on("mouseover", function(d) {
           tooltip.transition()
                .duration(400)
                .style("opacity", .9);
-          tooltip.html(d.name + "<br\>"+ d.type + "<br\>"+ d3.format(",")(d.price) + "kr" + "<br\>"+ d3.format(",")(Math.floor(d.sales)) + " antal sålda")
+          tooltip.html(d.name + "<br\>"+ d.type + "<br\>"+ d3.format(",")(d.price) + "kr" + "<br\>"+ d3.format(",")(Math.floor(d.sales)) + " antal sålda"+ "<br\>"+d3.format(",")(Math.floor(d.salesliter))+ " antal sålda liter")
                .style("left", (xMap(d) + 120) + "px")
                .style("top", (yMap(d)) + "px");
           
